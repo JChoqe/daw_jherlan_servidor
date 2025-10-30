@@ -1,0 +1,25 @@
+<!-- QuaryString nombre de la variable para para una accion -->
+<form id="frm" name="frm" action="funciones.php?accion=insertar" method="post">
+    <h1>Mi formulario de prueba</h1>
+    <!-- Nombre, caja de texto -->
+    <label id="lblNombre" for="nombre">Nombre</label>
+    <input id="nombre" name="nombre" value="" type="text">
+    <!-- Apellido, caja de texto -->
+    <label id="lblApellidos" for="apellidos">Apellidos</label>
+    <input id="apellidos" name="apellidos" value="" type="text">
+    <!-- Direccion, caja de texto -->
+    <label id="lblDireccion" for="direccion">Direccion</label>
+    <input id="direccion" name="direccion" value="" type="text">
+    <!-- Sexo, un selector con varios generos -->
+    <label id="lblSexo" for="sexo">Sexo</label>
+    <select id="sexo" name="sexo">
+        <option value="">Selecciona una opcion</option>
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+    </select>
+    <!-- Checkbox estudios de grado medio -->
+    <label id="lblEstudios" for="estudiosGM"> Tengo estudios grado medio </label>
+    <input id="estudiosGM" name="estudiosGM" value="grado-medio" type="checkbox">
+    <!-- submit enviar -->
+    <input type="submit" value="Enviar">
+</form>
