@@ -42,20 +42,41 @@ $shtml .= "</table>";
 // ----------------------
 // Haz una copia del array y quita las que no te gusten y cambialas por otras.
 // ----------------------
-$copiamovieSort = $movieSort;
-$deleteFirstFilm = "12 hombres sin piedad";
-$deleteSecondFilm = "Uno de los nuestros";
-// // Primero ver si el elemento que queremos sustituir existe (array_search) devuelve si existe.
-// $pos = buscarIndice($deleteFirstFilm)
-// $shtml .= "<p></p> ";
-// $shtml .= "<br><table border='1'>"; // Concateno para no perder la primera tabla
-// $shtml .= "<tr><td><b>Haz una copia del array y quita las que no te gusten y cambialas por otras.</b></td></tr>";
+$copiamovieTitle = $movieTitles;
+// Películas nuevas
+$newsMovies = ["Interstellar", "Avatar"];
+// Películas a reemplazar
+$replaceMovies = ["12 hombres sin piedad", "Uno de los nuestros"];
+$i = 0;
+foreach ($copiamovieTitle as $indice => $movie) {
+    // Si la película está en $replaceMovies
+    if (in_array($movie, $replaceMovies)) {
+        $copiamovieTitle[$indice] = $newsMovies[$i]; // reemplazar solo el elemento
+        $i++; // pasar al siguiente nuevo
+    }
+}
+// Generar la tabla HTML
+$shtml .= "<br><table border='1'>";
+$shtml .= "<tr><td><b>Haz una copia del array y quita las que no te gusten y cámbialas por otras.</b></td></tr>";
+foreach ($copiamovieTitle as $movie) {
+    $shtml .= "<tr><td>" . $movie . "</td></tr>";  
+}
 
-// // Muestro el HTML
-// echo $shtml;
-// function buscarIndice($elemento,$array){
-//     return array_search($elemento,$array);
+$shtml .= "</table>";
+
+// // ----------------------
+// // Añade al principio de la copia del array la que más te guste.
+// // ----------------------
+// $copiamovieTitle2 = $movieTitles;
+// //Peliculas que mas te gusta
+// $bestFilm = "Una batalla tras otra";
+// array_push($copiamovieTitle2,$bestFilm)
+// // Generar la tabla HTML
+// $shtml .= "<br><table border='1'>";
+// $shtml .= "<tr><td><b>Añade al principio de la copia del array la que más te guste.</b></td></tr>";
+// foreach ($copiamovieTitle2 as $movie) {
+//     $shtml .= "<tr><td>" . $movie . "</td></tr>";  
 // }
+// $shtml .= "</table>";
+echo $shtml;
 ?>
-
-// $objetivofinal="$diasemana $i de ". $mes['nombre'] ." de $anio";
