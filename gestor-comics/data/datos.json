@@ -1,0 +1,10 @@
+[
+    {
+        "id": 3,
+        "titulo": "Batman",
+        "autor": "Frank Miler",
+        "estado": "leído",
+        "prestado": true,
+        "localizacion": "estanteria1"
+    }
+]

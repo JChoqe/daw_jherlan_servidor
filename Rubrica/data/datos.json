@@ -1,0 +1,18 @@
+[
+    {
+        "id": 2,
+        "titulo": "Batman",
+        "autor": "Frank",
+        "estado": "pendiente de leer",
+        "prestado": false,
+        "localizacion": "estanteria1"
+    },
+    {
+        "id": 3,
+        "titulo": "Batman",
+        "autor": "Frank",
+        "estado": "pendiente de leer",
+        "prestado": true,
+        "localizacion": "estanteria1"
+    }
+]
