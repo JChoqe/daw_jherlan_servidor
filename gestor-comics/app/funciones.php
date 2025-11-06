@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-// ─── Crear Comic ────────────────────────────────────────────
+// Crear Comic
 function anadirComic($titulo, $autor, $estado, $prestado, $localizacion) {
     
     $comics = cargarJSON(__DIR__ . '/../data/datos.json');
@@ -123,7 +123,6 @@ function obtenerElementoMaximo($datos, $propiedad) {
     return $max;
 }
 
-// ─── Listar con filtro ─────────────────────────────────────
 function listarComics($titulo = '', $estado = '', $localizacion = '') {
     $comics = cargarJSON(__DIR__ . '/../data/datos.json');
     // Error o datos vacios
@@ -139,7 +138,6 @@ function listarComics($titulo = '', $estado = '', $localizacion = '') {
     return $filtrados;
 }
 
-// ─── JSON Helpers ──────────────────────────────────────────
 function cargarJSON($ruta) {
     if (!file_exists($ruta)) return [];
     $data = file_get_contents($ruta);

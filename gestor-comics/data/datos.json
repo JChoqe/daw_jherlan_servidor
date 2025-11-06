@@ -4,7 +4,7 @@
         "titulo": "Batman",
         "autor": "Frank Miler",
         "estado": "leido",
-        "prestado": false,
-        "localizacion": "mueble"
+        "prestado": true,
+        "localizacion": "estanteria1"
     }
 ]

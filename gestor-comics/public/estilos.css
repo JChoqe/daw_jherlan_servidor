@@ -1,7 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #E53935 0%, #C62827 100%);
     min-height: 100vh;
     padding: 20px;
     color: #333;
@@ -13,16 +13,29 @@ body {
     background: white;
     border-radius: 16px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+/* === TÍTULO CON LOGO A LA DERECHA === */
 h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
     text-align: center;
-    color: #4a148c;
+    color: #C62827;
     margin-bottom: 20px;
     font-size: 2.2em;
+    font-weight: 700;
 }
 
+h1 img {
+    width: 50px;
+    height: 50px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* === MENSAJES === */
 .success, .error {
     text-align: center;
     padding: 12px;
@@ -30,9 +43,18 @@ h1 {
     margin: 15px 0;
     font-weight: 600;
 }
-.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+.success { 
+    background: #d4edda; 
+    color: #155724; 
+    border: 1px solid #c3e6cb; 
+}
+.error { 
+    background: #ffebee; 
+    color: #C62827; 
+    border: 1px solid #ffcdd2; 
+}
 
+/* === FORMULARIO === */
 .form-comic {
     background: #f8f9fa;
     padding: 25px;
@@ -45,7 +67,7 @@ h1 {
     display: block;
     margin: 15px 0 6px;
     font-weight: 600;
-    color: #495057;
+    color: #333;
 }
 
 .form-comic input[type="text"],
@@ -60,8 +82,8 @@ h1 {
 
 .form-comic input:focus, .form-comic select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #E53935;
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15);
 }
 
 .checkbox {
@@ -73,12 +95,14 @@ h1 {
 
 .checkbox input[type="checkbox"] {
     transform: scale(1.4);
+    accent-color: #E53935;
 }
 
 .actions {
     margin-top: 20px;
     display: flex;
     gap: 12px;
+    justify-content: flex-start;
 }
 
 button, .btn-cancel {
@@ -91,47 +115,62 @@ button, .btn-cancel {
     display: inline-block;
     text-align: center;
     transition: 0.3s;
+    font-weight: 600;
 }
 
 button {
-    background: #667eea;
+    background: #E53935;
     color: white;
 }
 
-button:hover { background: #5a6fd8; }
+button:hover { 
+    background: #d32f2f; 
+    transform: translateY(-1px);
+}
 
 .btn-cancel {
     background: #6c757d;
     color: white;
 }
 
-.btn-cancel:hover { background: #5a6268; }
+.btn-cancel:hover { 
+    background: #5a6268; 
+}
 
+/* === SEPARADOR === */
 hr {
     border: 0;
-    border-top: 2px solid #e9ecef;
+    border-top: 2px solid #eee;
     margin: 35px 0;
 }
 
+/* === FILTROS === */
 #filtro {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     margin: 20px 0;
     padding: 15px;
-    background: #f8f9fa;
+    background: #fff8e1;
     border-radius: 8px;
-    border: 1px solid #e9ecef;
+    border: 1px solid #ffe082;
 }
 
 #filtro input, #filtro select {
     padding: 9px;
-    border: 1px solid #ced4da;
+    border: 1px solid #ddd;
     border-radius: 6px;
     min-width: 180px;
     font-size: 15px;
+    background: white;
 }
 
+#filtro input:focus, #filtro select:focus {
+    border-color: #E53935;
+    outline: none;
+}
+
+/* === TABLA === */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -143,11 +182,14 @@ table {
 }
 
 th {
-    background: #4a148c;
+    background: #C62827;
     color: white;
     padding: 14px;
     text-align: left;
     font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
 }
 
 td {
@@ -156,52 +198,75 @@ td {
 }
 
 tr:hover {
-    background: #f5f3ff;
+    background: #ffebee;
 }
 
+/* === ESTADOS === */
 .estado {
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 20px;
-    font-size: 0.85em;
-    font-weight: 600;
+    font-size: 0.8em;
+    font-weight: 700;
     text-transform: capitalize;
+    display: inline-block;
 }
 
-.estado.pendiente { background: #fff3cd; color: #856404; }
-.estado.leyendo { background: #d1ecf1; color: #0c5460; }
-.estado.leído { background: #d4edda; color: #155724; }
+.estado.pendiente {
+    background: #FFF3CD;
+    color: #856404;
+}
+.estado.leyendo {
+    background: #E3F2FD;
+    color: #1565C0;
+}
+.estado.leido {
+    background: #E8F5E8;
+    color: #2E7D32;
+}
 
+/* === ACCIONES === */
 .acciones a, .acciones button {
-    font-size: 0.9em;
+    font-size: 0.85em;
     padding: 6px 10px;
     margin: 0 4px;
     border-radius: 4px;
     text-decoration: none;
+    font-weight: 600;
 }
 
 .acciones a.edit {
-    background: #17a2b8;
+    background: #2196F3;
     color: white;
 }
 
-.acciones a.edit:hover { background: #138496; }
+.acciones a.edit:hover { 
+    background: #1976D2; 
+}
 
 .acciones button.delete {
-    background: #dc3545;
+    background: #E53935;
     color: white;
     border: none;
     cursor: pointer;
 }
 
-.acciones button.delete:hover { background: #c82333; }
+.acciones button.delete:hover { 
+    background: #C62827; 
+}
 
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
     .container { padding: 15px; }
+    h1 { font-size: 1.8em; flex-direction: column; gap: 10px; }
+    h1 img { width: 40px; height: 40px; }
     #filtro { flex-direction: column; }
     #filtro input, #filtro select { min-width: 100%; }
+    .actions { flex-direction: column; }
+    button, .btn-cancel { width: 100%; }
+
     table, thead, tbody, th, td, tr { display: block; }
     thead tr { position: absolute; top: -9999px; left: -9999px; }
-    tr { border: 1px solid #ccc; margin-bottom: 15px; border-radius: 8px; }
+    tr { border: 1px solid #ddd; margin-bottom: 15px; border-radius: 8px; background: #fff; }
     td { border: none; position: relative; padding-left: 50%; }
     td:before { 
         content: attr(data-label); 
@@ -210,6 +275,7 @@ tr:hover {
         width: 45%; 
         font-weight: bold; 
         white-space: nowrap;
+        color: #C62827;
     }
     .acciones { text-align: right; padding-left: 0; }
     .acciones td:before { display: none; }

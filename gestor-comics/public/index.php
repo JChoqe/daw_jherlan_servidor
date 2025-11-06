@@ -27,6 +27,7 @@ if (isset($_GET['editar'])) {
 <head>
     <meta charset="UTF-8">
     <title>Gestor de Cómics</title>
+    <link rel="icon" type="image/svg+xml" href="img/logo.svg">
     <link rel="stylesheet" href="estilos.css">
     <script src="js/funciones.js" defer></script>
 </head>
@@ -34,7 +35,10 @@ if (isset($_GET['editar'])) {
 
 <div class="container">
 
-    <h1>Gestor de Cómics</h1>
+<h1>
+  ComicVault
+  <img src="img/logo.svg" alt="logo" width="50" height="50">
+</h1>
     
     <!-- Mensajes (Guardado correctamente) y Errores(Para que no dejen espacios en blanco) -->
     <?php if ($mensaje): ?>
@@ -45,7 +49,6 @@ if (isset($_GET['editar'])) {
     <?php endif; ?>
     
     <form method="post" action="../app/funciones.php" class="form-comic">
-        
         <!-- Cuadno se quiere editar value será guardar(editar), si no añadir, que pasara a funciones.php -->
         <input type="hidden" name="action" value="<?= $editar ? 'guardar' : 'anadir' ?>">
         <?php
@@ -60,7 +63,7 @@ if (isset($_GET['editar'])) {
         <input type="text" name="autor" value="<?= htmlspecialchars($editar->autor ?? '') ?>">
 
         <label>Estado:</label>
-        <select name="estado" required>
+        <select name="estado">
             <option value="pendiente de leer" <?= ($editar->estado ?? '') === 'pendiente de leer' ? 'selected' : '' ?>>Pendiente de leer</option>
             <option value="leyendo" <?= ($editar->estado ?? '') === 'leyendo' ? 'selected' : '' ?>>Leyendo</option>
             <option value="leido" <?= ($editar->estado ?? '') === 'leido' ? 'selected' : '' ?>>leido</option>
@@ -73,14 +76,14 @@ if (isset($_GET['editar'])) {
         </div>
 
         <label>Localización:</label>
-        <select name="localizacion" required>
+        <select name="localizacion" >
             <option value="estanteria1" <?= ($editar->localizacion ?? '') === 'estanteria1' ? 'selected' : '' ?>>Estantería 1</option>
             <option value="estanteria2" <?= ($editar->localizacion ?? '') === 'estanteria2' ? 'selected' : '' ?>>Estantería 2</option>
             <option value="mueble" <?= ($editar->localizacion ?? '') === 'mueble' ? 'selected' : '' ?>>Mueble</option>
         </select>
 
         <div class="actions">
-            <button type="submit"><?= $editar ? 'Guardar Cambios' : '💾 Añadir Cómic' ?></button>
+            <button type="submit"><?= $editar ? 'Guardar Cambios' : 'Añadir Cómic' ?></button>
             <?php if ($editar): ?>
                 <a href="index.php" class="btn-cancel">Cancelar</a>
             <?php endif; ?>
@@ -90,15 +93,18 @@ if (isset($_GET['editar'])) {
     <hr>
 
     <h2>Mis Cómics (<?= count($comics) ?>)</h2>
-
+    <!-- Filtros -->
     <div id="filtro">
+        <!-- Por titulo -->
         <input type="text" id="filTitulo" placeholder="Buscar por título..." onkeyup="filtrar()">
+        <!-- Por Estado -->
         <select id="filEstado" onchange="filtrar()">
             <option value="">Todos los estados</option>
-            <option value="pendiente de leer">Pendiente</option>
-            <option value="leyendo">Leyendo</option>
-            <option value="leido">leido</option>
+            <option value="Pendiente leer">Pendiente</option>
+            <option value="Leyendo">Leyendo</option>
+            <option value="leido">Leido</option>
         </select>
+        <!-- Por localizacion -->
         <select id="filLocalizacion" onchange="filtrar()">
             <option value="">Todas las ubicaciones</option>
             <option value="estanteria1">Estantería 1</option>
@@ -106,12 +112,13 @@ if (isset($_GET['editar'])) {
             <option value="mueble">Mueble</option>
         </select>
     </div>
-
+    <!-- Primero comprobar de que no hay comics y si es asi pequeño mansaje -->
     <?php 
         if (empty($comics)): ?>
-        <p style="text-align:center; color:#777;">No hay cómics aún. ¡Añade el primero!</p>
+        <p style="text-align:center; color:#777;">No cómics !!!!! POBRE</p>
     <?php else: ?>
     <table>
+        <!-- Lista de comics -->
         <thead>
             <tr>
                 <th>Título</th>
@@ -125,11 +132,24 @@ if (isset($_GET['editar'])) {
         <tbody>
             <?php foreach ($comics as $comic): ?>
             <tr>
-                <td><?= htmlspecialchars($comic->titulo) ?></td>
-                <td><?= htmlspecialchars($comic->autor) ?></td>
-                <td><span class="estado <?= $comic->estado ?>"><?= ucfirst(str_replace(' de ', ' ', $comic->estado)) ?></span></td>
-                <td><?= $comic->prestado ? 'Sí' : 'No' ?></td>
-                <td><?= htmlspecialchars($comic->localizacion) ?></td>
+                <td>
+                    <?= htmlspecialchars($comic->titulo) ?>
+                </td>
+                <td>   
+                    <?= htmlspecialchars($comic->autor) ?>
+                </td>
+                <td>
+                    <span class="estado <?= $comic->estado ?>">
+                        <!-- para quitar el "de" que sobra. Me lie | Apaño | -->
+                        <?= ucfirst(str_replace(' de ', ' ', $comic->estado)) ?>
+                    </span>
+                </td>
+                <td>
+                    <?= $comic->prestado ? 'Sí' : 'No' ?>
+                </td>
+                <td>
+                    <?= htmlspecialchars($comic->localizacion) ?>
+                </td>
                 <td class="acciones">
                     <a href="index.php?editar=<?= $comic->id ?>" class="edit">Editar</a>
                     <form method="post" action="../app/funciones.php" style="display:inline;" onsubmit="return confirm('¿Seguro que quieres eliminar este cómic?')">

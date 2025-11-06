@@ -1,7 +1,7 @@
 // Filtracion dinamica en la tabla html, AJAX
 function filtrar() {
     const titulo = document.getElementById('filTitulo').value.toLowerCase().trim();
-    const estado = document.getElementById('filEstado').value;
+    const estado = document.getElementById('filEstado').value.trim();
     const localizacion = document.getElementById('filLocalizacion').value;
 
     const filas = document.querySelectorAll('table tbody tr');
