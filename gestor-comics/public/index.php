@@ -63,7 +63,7 @@ if (isset($_GET['editar'])) {
         <select name="estado" required>
             <option value="pendiente de leer" <?= ($editar->estado ?? '') === 'pendiente de leer' ? 'selected' : '' ?>>Pendiente de leer</option>
             <option value="leyendo" <?= ($editar->estado ?? '') === 'leyendo' ? 'selected' : '' ?>>Leyendo</option>
-            <option value="leído" <?= ($editar->estado ?? '') === 'leído' ? 'selected' : '' ?>>Leído</option>
+            <option value="leido" <?= ($editar->estado ?? '') === 'leido' ? 'selected' : '' ?>>leido</option>
         </select>
 
         <label>Prestado:</label>
@@ -97,7 +97,7 @@ if (isset($_GET['editar'])) {
             <option value="">Todos los estados</option>
             <option value="pendiente de leer">Pendiente</option>
             <option value="leyendo">Leyendo</option>
-            <option value="leido">Leído</option>
+            <option value="leido">leido</option>
         </select>
         <select id="filLocalizacion" onchange="filtrar()">
             <option value="">Todas las ubicaciones</option>

@@ -1,18 +1,10 @@
 [
     {
-        "id": 3,
+        "id": 1,
         "titulo": "Batman",
         "autor": "Frank Miler",
-        "estado": "leído",
-        "prestado": true,
-        "localizacion": "estanteria1"
-    },
-    {
-        "id": 1,
-        "titulo": "A",
-        "autor": "v",
-        "estado": "leyendo",
-        "prestado": true,
+        "estado": "leido",
+        "prestado": false,
         "localizacion": "mueble"
     }
 ]

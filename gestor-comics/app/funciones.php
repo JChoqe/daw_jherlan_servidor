@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($accion === 'anadir' || $accion === 'guardar') {
         if (empty($titulo) || empty($autor) || empty($estado) || empty($localizacion)) {
             header('Location: ../public/index.php?error=1');
+            // Mensaje de error en caso de que algun camso este vacio
             exit();
         }
     }
@@ -36,11 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     header('Location: ../public/index.php?msg=1');
+    // Mensaje de hecho en caso de que la funcion funcione correctamte
     exit();
 }
 
 // ─── Crear Comic ────────────────────────────────────────────
 function anadirComic($titulo, $autor, $estado, $prestado, $localizacion) {
+    
     $comics = cargarJSON(__DIR__ . '/../data/datos.json');
     $id = generarIdComic($comics);
 
@@ -57,10 +60,11 @@ function anadirComic($titulo, $autor, $estado, $prestado, $localizacion) {
     return guardarJSON(__DIR__ . '/../data/datos.json', $comics);
 }
 
-// ─── Modificar ──────────────────────────────────────────────
+// Modificar
 function modificarComic($titulo, $autor, $estado, $prestado, $localizacion, $id) {
+    // __DIR__ constante que devulve la ruta absoluta del directorio donde se encunetra el archivo actual
     $comics = cargarJSON(__DIR__ . '/../data/datos.json');
-    if ($comics === false) return false;
+    if ($comics === null) return false;
 
     foreach ($comics as &$comic) {
         if ($comic->id == $id) {
@@ -72,14 +76,16 @@ function modificarComic($titulo, $autor, $estado, $prestado, $localizacion, $id)
             break;
         }
     }
+    // Para evitar errores por referencia despues
     unset($comic);
-    return guardarJSON(__DIR__ . '/../data/datos.json', $comics);
+    guardarJSON(__DIR__ . '/../data/datos.json', $comics);
+    return true;
 }
 
-// ─── Eliminar ──────────────────────────────────────────────
+// Eliminar
 function eliminarComic($id) {
     $comics = cargarJSON(__DIR__ . '/../data/datos.json');
-    if ($comics === false) return false;
+    if ($comics === null) return false;
 
     foreach ($comics as $index => $comic) {
         if ($comic->id == $id) {
@@ -87,24 +93,30 @@ function eliminarComic($id) {
             break;
         }
     }
-
+    // Reinciar el array para tener indices consecutivos
     $comics = array_values($comics);
-    return guardarJSON(__DIR__ . '/../data/datos.json', $comics);
+    guardarJSON(__DIR__ . '/../data/datos.json', $comics);
+    return true;
 }
 
-// ─── ID Autoincremental ────────────────────────────────────
+// ID Autoincremental
 function generarIdComic($comics): int {
+    // Elemento maximno
     $maximo = obtenerElementoMaximo($comics, 'id');
+    // Primer id libre
     for ($i = 1; $i <= $maximo + 1; $i++) {
-        $existe = array_filter($comics, fn($c) => $c->id == $i);
+        // Recibe cada comic  comparo su id(filter que devulve un elemento) con la i del array.
+        $existe = array_filter($comics, fn($comic) => $comic->id == $i);
         if (empty($existe)) return $i;
     }
     return $maximo + 1;
 }
 
 function obtenerElementoMaximo($datos, $propiedad) {
-    if (empty($datos)) return 0;
+    if (empty($datos)) return null;
+    // Para guardar el mayor valor encontrado en el array
     $max = 0;
+    // Si el valor es mayor que el maximo se actualiza
     foreach ($datos as $item) {
         if ($item->$propiedad > $max) $max = $item->$propiedad;
     }
@@ -114,14 +126,17 @@ function obtenerElementoMaximo($datos, $propiedad) {
 // ─── Listar con filtro ─────────────────────────────────────
 function listarComics($titulo = '', $estado = '', $localizacion = '') {
     $comics = cargarJSON(__DIR__ . '/../data/datos.json');
+    // Error o datos vacios
     if ($comics === false) return [];
 
-    return array_filter($comics, function ($comic) use ($titulo, $estado, $localizacion) {
-        $okTitulo = $titulo === '' || stripos($comic->titulo, $titulo) !== false;
-        $okEstado = $estado === '' || $comic->estado === $estado;
-        $okLocalizacion = $localizacion === '' || $comic->localizacion === $localizacion;
-        return $okTitulo && $okEstado && $okLocalizacion;
-    });
+    $filtrados = array_filter($comics, fn($comic) => //Funcion flecha , devuleve true o flase
+        // Si titulo esta vacio, no filtra, pero si tiene contenido filtra sin importar mayusculas o minusculas
+        ($titulo === '' || stripos($comic->titulo, $titulo) !== false) &&
+        // Si no tiene estado, no filtra en caso caso contrario si y tiene que coincidir exactamente
+        ($estado === '' || $comic->estado === $estado) && 
+        ($localizacion === '' || $comic->localizacion === $localizacion)
+    );
+    return $filtrados;
 }
 
 // ─── JSON Helpers ──────────────────────────────────────────
