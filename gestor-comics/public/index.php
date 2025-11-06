@@ -1,10 +1,10 @@
 <?php
 // Archivo funciones.php solo una vez
 require_once "../app/funciones.php";
-// Guardo todos los la lista de Comics en esta variable 
-$comics = listarComics();
+// Guardo todos los la lista de Comics en esta variable. Es caso de vacío, asigno un array vacío.
+$comics = listarComics() ? : [];
 $editar = null;
-// Tanto mensaje como erro reocger un parametro en caso de no existir se asigan cadena vacia.
+// Tanto mensaje como error recoge un parametro en caso de no existir se asigan cadena vacia.
 $mensaje = $_GET['msg'] ?? '';
 $error = $_GET['error'] ?? '';
 
@@ -43,16 +43,17 @@ if (isset($_GET['editar'])) {
     <?php if ($error): ?>
         <p class="error">Todos los campos son obligatorios.</p>
     <?php endif; ?>
-
     
     <form method="post" action="../app/funciones.php" class="form-comic">
+        
+        <!-- Cuadno se quiere editar value será guardar(editar), si no añadir, que pasara a funciones.php -->
         <input type="hidden" name="action" value="<?= $editar ? 'guardar' : 'anadir' ?>">
         <?php
-            if ($editar): ?>
+            if ($editar): ?>  <!-- En caso de editar pasamos el id del comic que vamos a editar a funcion.php-->
             <input type="hidden" name="id" value="<?= $editar->id ?>">
         <?php endif; ?>
-
-        <label>Título:</label>
+        <!-- el htmlspecialchars es para evitar inyecciones de codigo -->
+        <label>Título:</label> <!-- Muestra el título del cómic si estamos editando uno; si no, deja el campo vacío. -->
         <input type="text" name="titulo" value="<?= htmlspecialchars($editar->titulo ?? '') ?>">
 
         <label>Autor:</label>
@@ -79,7 +80,7 @@ if (isset($_GET['editar'])) {
         </select>
 
         <div class="actions">
-            <button type="submit"><?= $editar ? 'Guardar Cambios' : 'Añadir Cómic' ?></button>
+            <button type="submit"><?= $editar ? 'Guardar Cambios' : '💾 Añadir Cómic' ?></button>
             <?php if ($editar): ?>
                 <a href="index.php" class="btn-cancel">Cancelar</a>
             <?php endif; ?>
@@ -96,7 +97,7 @@ if (isset($_GET['editar'])) {
             <option value="">Todos los estados</option>
             <option value="pendiente de leer">Pendiente</option>
             <option value="leyendo">Leyendo</option>
-            <option value="leído">Leído</option>
+            <option value="leido">Leído</option>
         </select>
         <select id="filLocalizacion" onchange="filtrar()">
             <option value="">Todas las ubicaciones</option>
@@ -106,7 +107,8 @@ if (isset($_GET['editar'])) {
         </select>
     </div>
 
-    <?php if (empty($comics)): ?>
+    <?php 
+        if (empty($comics)): ?>
         <p style="text-align:center; color:#777;">No hay cómics aún. ¡Añade el primero!</p>
     <?php else: ?>
     <table>
